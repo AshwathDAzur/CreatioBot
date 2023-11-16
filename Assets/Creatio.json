@@ -1,0 +1,54 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+      {
+        "speak": "Tom's Pie is a Pizza restaurant which is rated 9.3 by customers.",
+        "type": "ColumnSet",
+        "columns": [
+          {
+            "type": "Column",
+            "width": 2,
+            "items": [
+              {
+                "type": "TextBlock",
+                "text": "Creatio"
+              },
+              {
+                "type": "TextBlock",
+                "text": "LEAD",
+                "weight": "bolder",
+                "size": "extraLarge",
+                "spacing": "none"
+              },
+              {
+                "type": "TextBlock",
+                "text": "A **Lead** is a potential customer or prospect. Generating a lead is the first step of the sales process in CRM. Lead records are designed to store all known information on lead, including company name, address, contact details and the lead's current position in the sales funnel.",
+                "size": "small",
+                "wrap": true
+              }
+            ]
+          },
+          {
+            "type": "Column",
+            "width": 1,
+            "items": [
+              {
+                "type": "Image",
+                "url": "https://yt3.googleusercontent.com/ytc/APkrFKZgACbg3OJRRbl57caawHXmEgr0x03BoW1XMZJudg=s900-c-k-c0x00ffffff-no-rj",
+                "size": "auto"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "type": "Action.OpenUrl",
+        "title": "More Info",
+        "url": "https://www.creatio.com/"
+      }
+    ]
+  }
