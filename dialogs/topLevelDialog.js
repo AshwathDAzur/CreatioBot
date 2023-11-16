@@ -417,6 +417,8 @@ class TopLevelDialog extends ComponentDialog {
         try {
             const response = await axios.request(config);
             if (response.status === 204) {
+
+                
                 return 'succeeded';
             } else {
                 console.log(`Request failed with status code: ${response.status}`);
