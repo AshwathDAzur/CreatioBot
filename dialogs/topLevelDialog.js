@@ -16,6 +16,10 @@ const NUMBER_PROMPT = 'NUMBER_PROMPT';
 const CONFIRM_PROMPT = 'CONFIRM_PROMPT';
 var Selectedoppid = "";
 var changestageid = "";
+var signedinuser = {
+    id:"",
+    email:""
+};
 
 class TopLevelDialog extends ComponentDialog {
     constructor() {
@@ -24,6 +28,7 @@ class TopLevelDialog extends ComponentDialog {
         this.addDialog(new NumberPrompt(NUMBER_PROMPT));
         this.addDialog(new ConfirmPrompt(CONFIRM_PROMPT));
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
+            this.getuserstep.bind(this),
             this.initiateopportunitytracking.bind(this),
             this.userchoiceStep.bind(this),
             this.ConfirmStep.bind(this),
@@ -36,9 +41,15 @@ class TopLevelDialog extends ComponentDialog {
         this.initialDialogId = WATERFALL_DIALOG;
     }
 
+    async getuserstep(stepContext) {
+        const promptOptions = { prompt: 'Please Enter your Email Id :' };
+        return await stepContext.prompt(TEXT_PROMPT, promptOptions);
+    }
+
     async initiateopportunitytracking(step) {
         step.values.OpportunityInfo = new Opportunity();
-
+        signedinuser.email= step.result;
+        console.log(signedinuser.email);
         const cookie = await this.getauthorizestep();
         if (cookie) {
             let bpmCsrfValue = null;
@@ -49,7 +60,9 @@ class TopLevelDialog extends ComponentDialog {
                 }
             }
             if (bpmCsrfValue) {
-                const response = await this.getopportunitylist(bpmCsrfValue, cookie, step);
+                signedinuser.id = await this.getuseridstep(bpmCsrfValue, cookie, signedinuser.email);
+                if(signedinuser.id!="error") {
+                const response = await this.getopportunitylist(bpmCsrfValue, cookie, step, signedinuser.id);
                 if (response === 'succeeded') {
                     await step.context.sendActivity('Listing your opportunities...');
                     await this.displayOpportunityCards(step);
@@ -57,6 +70,10 @@ class TopLevelDialog extends ComponentDialog {
                     await step.context.sendActivity('Get Opportunity list failed');
                 }
                 return await step.next();
+            }
+            else{
+                await step.context.sendActivity('User Not Found...');
+            }
             } else {
                 await step.context.sendActivity('BPMCSRF header not found in the response.');
             }
@@ -90,9 +107,34 @@ class TopLevelDialog extends ComponentDialog {
         }
     }
 
-    async getopportunitylist(BPMCSRF, cookie, step) {
+    async getuseridstep(BPMCSRF, cookie, email){
         const cookiesString = cookie.join(';');
-        const url = 'https://139261-crm-bundle.creatio.com/0/odata/opportunity';
+        let config = {
+            method: 'get',
+             maxBodyLength: Infinity,
+             url: `https://139261-crm-bundle.creatio.com/0/odata/contact?$select=Id&$filter=Email eq \'${email}\'`,
+             headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'ForceUseSession': 'true',
+                'BPMCSRF': BPMCSRF,
+                'Cookie': cookiesString
+            },
+        };
+
+        try {
+            const response = await axios.request(config);
+            return(response.data.value[0].Id);
+        } catch (error) {
+            console.log(error);
+            return 'error';
+        }
+
+    }
+
+    async getopportunitylist(BPMCSRF, cookie, step, id) {
+        const cookiesString = cookie.join(';');
+        const url = `https://139261-crm-bundle.creatio.com/0/odata/opportunity?$filter=Owner/Id eq ${id}`;
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
