@@ -278,6 +278,7 @@ class TopLevelDialog extends ComponentDialog {
     }
 
     createSelectedOpportunityCard(opp, curstage) {
+        const duedate = opp.DueDate.split('T')[0];
         const adaptiveCard = CardFactory.adaptiveCard({
           "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
           "type": "AdaptiveCard",
@@ -293,20 +294,28 @@ class TopLevelDialog extends ComponentDialog {
                   "items":  [
                     {
                       "type": "TextBlock",
-                      "text": "Opportunity Overview",
+                      "text": opp.Title,
                       "weight": "bolder",
                       "size": "extraLarge",
                       "spacing": "none"
                     },
                     {
                       "type": "TextBlock",
-                      "text": opp.Title
-                    },
-                    {
-                      "type": "TextBlock",
-                      "text": `Current Stage: **${curstage}**`,
+                      "text": `Due Date : **${duedate}**`,
                       "weight": "bolder",
                       "spacing": "none"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": `Current Stage: **${curstage}**`,
+                        "weight": "bolder",
+                        "spacing": "none"
+                    },
+                    {
+                        "type": "TextBlock",
+                        "text": `Description : **${opp.Description}**`,
+                        "weight": "bolder",
+                        "spacing": "none"
                     }
                   ]
                 },
