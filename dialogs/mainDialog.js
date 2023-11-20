@@ -60,14 +60,14 @@ class MainDialog extends ComponentDialog {
         else
         {
             await stepContext.context.sendActivity("Sorry I cannot understand!");
-            await stepContext.context.sendActivity("Things I can help you with are...");
+            await stepContext.context.sendActivity("You can get started by selecting one of the following topics that best describes your need.");
             await this.sendSuggestedActions(stepContext.context);
             return await stepContext.endDialog();
         }
     }
 
     async finalStep(stepContext) {
-        await stepContext.context.sendActivity("Things I can help you with are...");
+        await stepContext.context.sendActivity("You can get started by selecting one of the following topics that best describes your need.");
         await this.sendSuggestedActions(stepContext.context);
         return await stepContext.endDialog();
     }

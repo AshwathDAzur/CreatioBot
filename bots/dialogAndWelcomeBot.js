@@ -12,7 +12,7 @@ class DialogAndWelcomeBot extends DialogBot {
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
                     // const reply = `Welcome to Complex Dialog Bot ${ membersAdded[cnt].name }. This bot provides a complex conversation, with multiple dialogs. Type anything to get started.`;
-                    const reply = "Hai!";
+                    const reply = "Welcome back!";
                     await context.sendActivity(reply);
                     await this.sendSuggestedActions(context);
                 }
