@@ -12,6 +12,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
+        "adaptivecards": "^3.0.2",
         "axios": "^1.6.1",
         "botbuilder": "~4.21.0",
         "botbuilder-dialogs": "~4.21.0",
