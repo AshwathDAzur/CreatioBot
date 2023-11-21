@@ -24,9 +24,9 @@ class SalesAnalysisDialog extends ComponentDialog {
     async selectionStep(stepContext) {
 
         await this.displayOpportunityCards(stepContext);
-        await stepContext.context.sendActivity({
-            attachments: [CardFactory.adaptiveCard(adaptiveCard)]
-        });
+        // await stepContext.context.sendActivity({
+        //     attachments: [CardFactory.adaptiveCard(adaptiveCard)]
+        // });
         return await stepContext.endDialog();
     }
 
@@ -43,156 +43,120 @@ class SalesAnalysisDialog extends ComponentDialog {
             "version": "1.0",
             "body": [
               {
-                "type": "TextBlock",
-                "text": "Your registration is almost complete",
-                "size": "medium",
-                "weight": "bolder",
-                "wrap": true,
-                "style": "heading"
-              },
-              {
-                "type": "TextBlock",
-                "text": "What type of food do you prefer?",
-                "wrap": true
-              },
-              {
-                "type": "ImageSet",
-                "imageSize": "medium",
-                "images": [
+                "type": "Container",
+                "items": [
                   {
-                    "type": "Image",
-                    "url": `${sampledata.hasMenu.hasMenuSection[0].image}`,
-                    "altText": `${sampledata.hasMenu.hasMenuSection[0].name}`
+                    "type": "TextBlock",
+                    "text": "Approvals",
+                    "weight": "bolder",
+                    "size": "medium"
                   },
                   {
-                    "type": "Image",
-                    "url": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[0].image}`,
-                    "altText": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[0].name}`
-                  },
-                  {
-                    "type": "Image",
-                    "url": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[1].image}`,
-                    "altText": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[1].name}`
+                    "type": "ColumnSet",
+                    "columns": [
+                      {
+                        "type": "Column",
+                        "width": "auto",
+                        "items": [
+                          {
+                            "type": "Image",
+                            "url": "https://spunknowndesign.files.wordpress.com/2020/11/kontentino_features_social_media_content_client_approvals.png",
+                            "altText": "Creatio",
+                            "size": "small",
+                            "style": "person"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Column",
+                        "width": "stretch",
+                        "items": [
+                          {
+                            "type": "TextBlock",
+                            "text": "opportunity or approval title",
+                            "weight": "bolder",
+                            "wrap": true
+                          },
+                          {
+                            "type": "TextBlock",
+                            "spacing": "none",
+                            "text": "Approval Date {{DATE(2017-02-14T06:08:39Z, SHORT)}}",
+                            "isSubtle": true,
+                            "wrap": true
+                          }
+                        ]
+                      }
+                    ]
                   }
+                ]
+              },
+              {
+                "type": "Container",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "Small Description here...",
+                    "wrap": true
+                  },
+                //   {
+                //     "type": "FactSet",
+                //     "facts": [
+                //       {
+                //         "title": "Board:",
+                //         "value": "Adaptive Card"
+                //       },
+                //       {
+                //         "title": "List:",
+                //         "value": "Backlog"
+                //       },
+                //       {
+                //         "title": "Assigned to:",
+                //         "value": "Matt Hidinger"
+                //       },
+                //       {
+                //         "title": "Due date:",
+                //         "value": "Not set"
+                //       }
+                //     ]
+                //   }
                 ]
               }
             ],
             "actions": [
               {
                 "type": "Action.ShowCard",
-                "title": `${sampledata.hasMenu.hasMenuSection[0].name}`,
+                "title": "Reject",
+                "style": "destructive",
                 "card": {
                   "type": "AdaptiveCard",
                   "body": [
                     {
-                      "type": "Input.ChoiceSet",
-                      "id": "SteakTemp",
-                      "style": "expanded",
-                      "label": `${sampledata.hasMenu.hasMenuSection[0].description}`,
-                      "isRequired": true,
-                      "errorMessage": "Please select one of the above options",
-                      "choices": [
-                        {
-                          "title": "Rare",
-                          "value": "rare"
-                        },
-                        {
-                          "title": "Medium-Rare",
-                          "value": "medium-rare"
-                        },
-                        {
-                          "title": "Well-done",
-                          "value": "well-done"
-                        }
-                      ]
-                    },
-                    {
                       "type": "Input.Text",
-                      "id": "SteakOther",
+                      "id": "comment",
                       "isMultiline": true,
-                      "label": "Any other preparation requests?"
+                      "placeholder": "Are you sure you want to reject the approval?"
                     }
                   ],
                   "actions": [
                     {
                       "type": "Action.Submit",
-                      "title": "OK",
-                      "data": {
-                        "FoodChoice": "Steak"
-                      }
+                      "title": "Reject"
+                    },
+                    {
+                      "type": "Action.Submit",
+                      "title": "Cancel"
                     }
-                  ],
-                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+                  ]
                 }
               },
               {
-                "type": "Action.ShowCard",
-                "title": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[0].name}`,
-                "card": {
-                  "type": "AdaptiveCard",
-                  "body": [
-                    {
-                      "type": "Input.Toggle",
-                      "id": "ChickenAllergy",
-                      "valueOn": "noPeanuts",
-                      "valueOff": "peanuts",
-                      "title": "I'm allergic to peanuts",
-                      "label": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[0].description}`
-                    },
-                    {
-                      "type": "Input.Text",
-                      "id": "ChickenOther",
-                      "isMultiline": true,
-                      "label": "Any other preparation requests?"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "Action.Submit",
-                      "title": "OK",
-                      "data": {
-                        "FoodChoice": "Chicken"
-                      }
-                    }
-                  ],
-                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
-                }
-              },
-              {
-                "type": "Action.ShowCard",
-                "title": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[1].name}`,
-                "card": {
-                  "type": "AdaptiveCard",
-                  "body": [
-                    {
-                      "type": "Input.Toggle",
-                      "id": "Vegetarian",
-                      "title": "Please prepare it vegan",
-                      "label": `${sampledata.hasMenu.hasMenuSection[0].hasMenuSection[1].description}`,
-                      "valueOn": "vegan",
-                      "valueOff": "notVegan"
-                    },
-                    {
-                      "type": "Input.Text",
-                      "id": "VegOther",
-                      "isMultiline": true,
-                      "label": "Any other preparation requests?"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "Action.Submit",
-                      "title": "OK",
-                      "data": {
-                        "FoodChoice": "Vegetarian"
-                      }
-                    }
-                  ],
-                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
-                }
+                "type": "Action.Submit",
+                "title": "Approve",
+                "style": "positive",
               }
             ]
-          });
+          }
+          );
         return adaptiveCard;
     }
 

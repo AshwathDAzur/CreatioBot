@@ -84,7 +84,7 @@ class MainDialog extends ComponentDialog {
             },
             {
                 type: ActionTypes.PostBack,
-                title: 'Analyse my Sales',
+                title: 'My Approvals',
                 value: 'case2',
                 image: 'https://yt3.googleusercontent.com/ytc/APkrFKZgACbg3OJRRbl57caawHXmEgr0x03BoW1XMZJudg=s900-c-k-c0x00ffffff-no-rj',
                 imageAltText: 'Creatio'
