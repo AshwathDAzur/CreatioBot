@@ -3,11 +3,7 @@ const {ComponentDialog, WaterfallDialog } = require('botbuilder-dialogs');
 const {  CardFactory } = require('botbuilder');
 
 const SALES_ANALYSIS_DIALOG  = 'SALES_ANALYSIS_DIALOG';
-
 const WATERFALL_DIALOG = 'WATERFALL_DIALOG';
-
-const adaptiveCard = require('../Assets/ImageGalleryCard.json');
-const sampledata = require('../Data/data.json');
 
 
 class SalesAnalysisDialog extends ComponentDialog {
@@ -31,12 +27,12 @@ class SalesAnalysisDialog extends ComponentDialog {
     }
 
     async displayOpportunityCards(step) {
-            const card = this.createOpportunityCard(sampledata);
+            const card = this.createOpportunityCard();
             const message = { type: 'message', attachments: [card] };
             await step.context.sendActivity(message);
     }
 
-    createOpportunityCard(sampledata) {
+    createOpportunityCard() {
         const adaptiveCard = CardFactory.adaptiveCard({
             "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
             "type": "AdaptiveCard",

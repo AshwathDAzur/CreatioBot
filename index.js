@@ -78,3 +78,7 @@ server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
     await adapter.process(req, res, (context) => bot.run(context));
 });
+
+server.get('/api/messages', async (req, res) => {
+    res.send("Im Ashwath");
+});
